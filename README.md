@@ -37,6 +37,5 @@ Defensor Espacial 2D es un shoot 'em up clásico desarrollado con la biblioteca 
 
 ## 🌐 Enlaces de Despliegue
 - **GitHub Pages:** https://evilwizz.github.io/Practica-3-Pregunta-2/
-- **Netlify:** https://defensor-espacial-utp.netlify.app/
 - **Repositorio GitHub:** https://github.com/Evilwizz/Practica-3-Pregunta-2
-- **Google Drive (Archivos Completos):** https://drive.google.com/drive/folders/defensor-espacial-aldair-lozano
+- **Google Drive (Archivos Completos):** https://drive.google.com/drive/folders/1Q5WVKCcpS57xBJCXAqC64VOiAAlGsh6q

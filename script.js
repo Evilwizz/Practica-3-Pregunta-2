@@ -35,14 +35,14 @@ var nombreEstudiante = 'Aldair Jose Lozano Santiago';
 // ==========================================================================
 var estadoPortada = {
     preload: function() {
-        juego.load.image('fondo', 'fondo.png');
-        juego.load.image('fondo2', 'fondo2.png');
-        juego.load.spritesheet('nave', 'nave.png', 128, 128);
-        juego.load.spritesheet('enemigo1', 'enemigo1.png', 80, 80);
-        juego.load.spritesheet('enemigo2', 'enemigo2.png', 80, 80);
-        juego.load.spritesheet('explosion', 'explosion.png', 64, 64);
-        juego.load.image('laser', 'laser.png');
-        juego.load.image('laser_enemigo', 'laser_enemigo.png');
+        juego.load.image('fondo', 'img/fondo.png');
+        juego.load.image('fondo2', 'img/fondo2.png');
+        juego.load.spritesheet('nave', 'img/nave.png', 128, 128);
+        juego.load.spritesheet('enemigo1', 'img/enemigo1.png', 80, 80);
+        juego.load.spritesheet('enemigo2', 'img/enemigo2.png', 80, 80);
+        juego.load.spritesheet('explosion', 'img/explosion.png', 64, 64);
+        juego.load.image('laser', 'img/laser.png');
+        juego.load.image('laser_enemigo', 'img/laser_enemigo.png');
     },
 
     create: function() {
