@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "defensor-espacial-2d",
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

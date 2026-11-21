@@ -13,8 +13,10 @@ var Sonidos = (function() {
     // Archivos de sonido pre-cargados
     var audioFiles = {
         disparo: new Audio('audio/disparo.wav'),
+        laserEnemigo: new Audio('audio/laser_enemigo.wav'),
         colision: new Audio('audio/colision.wav'),
         victoria: new Audio('audio/victoria.wav'),
+        derrota: new Audio('audio/derrota.wav'),
         bgm: new Audio('audio/bgm.wav')
     };
     audioFiles.bgm.loop = true;
@@ -59,17 +61,15 @@ var Sonidos = (function() {
             return muted;
         },
 
-        // Sonido de Disparo Láser (WAV con fallback a oscilador)
+        // Sonido de Disparo Láser Jugador (Cian)
         playDisparo: function() {
             if (muted) return;
             try {
                 audioFiles.disparo.currentTime = 0;
-                audioFiles.disparo.volume = 0.6;
+                audioFiles.disparo.volume = 0.55;
                 var p = audioFiles.disparo.play();
                 if (p !== undefined) {
-                    p.catch(function() {
-                        Sonidos.synthDisparo();
-                    });
+                    p.catch(function() { Sonidos.synthDisparo(); });
                 }
             } catch(e) {
                 Sonidos.synthDisparo();
@@ -84,12 +84,43 @@ var Sonidos = (function() {
             osc.type = 'sawtooth';
             osc.frequency.setValueAtTime(950, ctx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(180, ctx.currentTime + 0.16);
-            gain.gain.setValueAtTime(0.3, ctx.currentTime);
+            gain.gain.setValueAtTime(0.28, ctx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.16);
             osc.connect(gain);
             gain.connect(ctx.destination);
             osc.start(ctx.currentTime);
             osc.stop(ctx.currentTime + 0.16);
+        },
+
+        // Sonido Láser Enemigo (Rojo)
+        playLaserEnemigo: function() {
+            if (muted) return;
+            try {
+                audioFiles.laserEnemigo.currentTime = 0;
+                audioFiles.laserEnemigo.volume = 0.45;
+                var p = audioFiles.laserEnemigo.play();
+                if (p !== undefined) {
+                    p.catch(function() { Sonidos.synthLaserEnemigo(); });
+                }
+            } catch(e) {
+                Sonidos.synthLaserEnemigo();
+            }
+        },
+
+        synthLaserEnemigo: function() {
+            var ctx = getAudioContext();
+            if (!ctx) return;
+            var osc = ctx.createOscillator();
+            var gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(450, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(650, ctx.currentTime + 0.14);
+            gain.gain.setValueAtTime(0.18, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+            osc.connect(gain);
+            gain.connect(ctx.destination);
+            osc.start(ctx.currentTime);
+            osc.stop(ctx.currentTime + 0.14);
         },
 
         // Sonido de Colisión / Explosión
@@ -100,9 +131,7 @@ var Sonidos = (function() {
                 audioFiles.colision.volume = 0.8;
                 var p = audioFiles.colision.play();
                 if (p !== undefined) {
-                    p.catch(function() {
-                        Sonidos.synthColision();
-                    });
+                    p.catch(function() { Sonidos.synthColision(); });
                 }
             } catch(e) {
                 Sonidos.synthColision();
@@ -144,9 +173,7 @@ var Sonidos = (function() {
                 audioFiles.victoria.volume = 0.85;
                 var p = audioFiles.victoria.play();
                 if (p !== undefined) {
-                    p.catch(function() {
-                        Sonidos.synthVictoria();
-                    });
+                    p.catch(function() { Sonidos.synthVictoria(); });
                 }
             } catch(e) {
                 Sonidos.synthVictoria();
@@ -171,6 +198,39 @@ var Sonidos = (function() {
             });
         },
 
+        // Sonido de Derrota
+        playDerrota: function() {
+            if (muted) return;
+            try {
+                audioFiles.derrota.currentTime = 0;
+                audioFiles.derrota.volume = 0.8;
+                var p = audioFiles.derrota.play();
+                if (p !== undefined) {
+                    p.catch(function() { Sonidos.synthDerrota(); });
+                }
+            } catch(e) {
+                Sonidos.synthDerrota();
+            }
+        },
+
+        synthDerrota: function() {
+            var ctx = getAudioContext();
+            if (!ctx) return;
+            var notas = [440.0, 392.0, 349.23, 293.66];
+            notas.forEach(function(freq, i) {
+                var osc = ctx.createOscillator();
+                var gain = ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(freq, ctx.currentTime + i * 0.22);
+                gain.gain.setValueAtTime(0.25, ctx.currentTime + i * 0.22);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + i * 0.22 + 0.3);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(ctx.currentTime + i * 0.22);
+                osc.stop(ctx.currentTime + i * 0.22 + 0.3);
+            });
+        },
+
         // Música de fondo
         playBGM: function() {
             if (muted || isBgmPlaying) return;
@@ -179,9 +239,7 @@ var Sonidos = (function() {
                 audioFiles.bgm.volume = 0.35;
                 var p = audioFiles.bgm.play();
                 if (p !== undefined) {
-                    p.catch(function() {
-                        Sonidos.startSynthBGM();
-                    });
+                    p.catch(function() { Sonidos.startSynthBGM(); });
                 }
             } catch(e) {
                 Sonidos.startSynthBGM();
@@ -225,5 +283,4 @@ var Sonidos = (function() {
     };
 })();
 
-// Auto-inicializar detector de interacción
 Sonidos.init();

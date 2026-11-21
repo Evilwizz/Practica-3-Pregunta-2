@@ -12,37 +12,37 @@
         }
 
         body {
-            background: radial-gradient(circle at center, #111827 0%, #030712 100%);
-            color: #f3f4f6;
+            background: radial-gradient(circle at center, #0f172a 0%, #020617 100%);
+            color: #f8fafc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 15px 10px;
+            padding: 12px 10px;
             overflow-x: hidden;
         }
 
         .header-container {
             text-align: center;
-            margin-bottom: 12px;
-            max-width: 500px;
+            margin-bottom: 8px;
+            max-width: 480px;
             width: 100%;
         }
 
         .utp-badge {
             display: inline-block;
-            background: linear-gradient(135deg, #b91c1c, #dc2626);
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
             color: white;
             font-size: 11px;
             font-weight: 800;
             letter-spacing: 1.5px;
-            padding: 3px 12px;
+            padding: 3px 14px;
             border-radius: 20px;
             text-transform: uppercase;
             box-shadow: 0 2px 8px rgba(220, 38, 38, 0.4);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
 
         .game-title {
@@ -56,11 +56,11 @@
         }
 
         .student-banner {
-            background: rgba(30, 41, 59, 0.85);
+            background: rgba(30, 41, 59, 0.9);
             border: 1px solid rgba(56, 189, 248, 0.4);
             border-radius: 8px;
             padding: 6px 14px;
-            margin: 8px auto;
+            margin: 6px auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -84,26 +84,27 @@
 
         .control-bar {
             display: flex;
-            gap: 8px;
+            gap: 6px;
             justify-content: center;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             max-width: 370px;
             width: 100%;
+            flex-wrap: wrap;
         }
 
         .btn-ui {
             background: #1e293b;
             color: #cbd5e1;
             border: 1px solid #475569;
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
         }
 
         .btn-ui:hover {
@@ -142,10 +143,10 @@
         }
 
         .instructions-footer {
-            margin-top: 12px;
+            margin-top: 10px;
             max-width: 370px;
             width: 100%;
-            background: rgba(15, 23, 42, 0.8);
+            background: rgba(15, 23, 42, 0.85);
             border: 1px solid #334155;
             border-radius: 8px;
             padding: 8px 12px;
@@ -181,11 +182,14 @@
         <button id="btnMute" class="btn-ui" title="Activar o Silenciar Audio">
             <span id="muteIcon">🔊</span> <span id="muteText">Sonido: ON</span>
         </button>
-        <button id="btnPortada" class="btn-ui" title="Volver a la Portada Principal">
+        <button id="btnPortada" class="btn-ui" title="Ir a la Portada">
             <span>🏠</span> <span>Portada</span>
         </button>
-        <button id="btnReiniciar" class="btn-ui" title="Reiniciar Partida">
-            <span>🔄</span> <span>Reiniciar</span>
+        <button id="btnNivel1" class="btn-ui" title="Ir al Nivel 1">
+            <span>🚀</span> <span>Nivel 1</span>
+        </button>
+        <button id="btnNivel2" class="btn-ui" title="Ir al Nivel 2">
+            <span>🔥</span> <span>Nivel 2</span>
         </button>
     </div>
 
@@ -194,13 +198,11 @@
     </div>
 
     <div class="instructions-footer">
-        <div>Controles: <kbd>◀</kbd> <kbd>▶</kbd> o <kbd>A</kbd> <kbd>D</kbd> Moverse &nbsp;|&nbsp; <kbd>ESPACIO</kbd> o Clic para Disparar</div>
-        <div style="color: #64748b; font-size: 10px; margin-top: 3px;">Phaser 2D • Colisiones ARCADE • Sonidos de Disparo y Explosión</div>
+        <div>Controles: <kbd>◀</kbd> <kbd>▶</kbd> o <kbd>A</kbd> <kbd>D</kbd> Moverse &nbsp;|&nbsp; <kbd>ESPACIO</kbd> o Clic Disparar</div>
+        <div style="color: #64748b; font-size: 10px; margin-top: 3px;">Phaser Multi-Nivel • Físicas ARCADE • Sonidos Duales WAV/WebAudio</div>
     </div>
 
-    <!-- Scripts del juego -->
     <script>
-        // Función global para obtener el nombre del jugador
         window.getNombreJugador = function() {
             return 'Aldair Jose Lozano Santiago';
         };
@@ -210,7 +212,6 @@
     <script src="script.js"></script>
 
     <script>
-        // Conexión de controles de la interfaz externa
         document.getElementById('btnMute').addEventListener('click', function() {
             if (typeof Sonidos !== 'undefined') {
                 var muted = Sonidos.toggleMute();
@@ -226,9 +227,15 @@
             }
         });
 
-        document.getElementById('btnReiniciar').addEventListener('click', function() {
+        document.getElementById('btnNivel1').addEventListener('click', function() {
             if (typeof juego !== 'undefined' && juego.state) {
-                juego.state.start('principal');
+                juego.state.start('nivel1');
+            }
+        });
+
+        document.getElementById('btnNivel2').addEventListener('click', function() {
+            if (typeof juego !== 'undefined' && juego.state) {
+                juego.state.start('nivel2');
             }
         });
     </script>
